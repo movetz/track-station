@@ -1,0 +1,29 @@
+version: '2'
+services:
+    web:
+        build:
+            context: ./provision/nginx
+        container_name: ts_web
+        ports:
+            #TODO: Add dns resolver
+             - 0.0.0.0:8080:80
+        depends_on:
+             - app
+    app:
+        build:
+            context: ./provision/php-fpm
+        container_name: ts_app
+        volumes:
+             - ./:/app
+        links:
+             - database
+    database:
+        image: postgres:9.4
+        container_name: ts_database
+        ports:
+             - 0.0.0.0:5432:5432
+        environment:
+             - POSTGRES_USER=ts
+             - POSTGRES_DB=ts_db
+             - POSTGRES_PASSWORD=ts
+             - PGPASSWORD=ts

@@ -1,0 +1,14 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_host: database
+    database_port: ~
+    database_name: ts_db
+    database_user: ts
+    database_password: ts
+
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+
+    secret: 25fbc384910b94e2d91f99f71bc8029260c2cf5e
