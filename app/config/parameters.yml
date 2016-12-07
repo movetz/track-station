@@ -1,7 +1,7 @@
 # This file is auto-generated during the composer install
 parameters:
-    database_host: database
-    database_port: ~
+    database_host: localhost
+    database_port: 5433
     database_name: ts_db
     database_user: ts
     database_password: ts

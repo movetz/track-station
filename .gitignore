@@ -1,4 +1,5 @@
 .idea
+.phpcomplete_extended
 /build/
 /phpunit.xml
 /var/*
