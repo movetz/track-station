@@ -15,15 +15,14 @@ services:
         container_name: ts_app
         volumes:
              - ./:/app
-        depends_on:
-             - database
+
     database:
         image: postgres:9.4
         container_name: ts_database
         ports:
              - 0.0.0.0:5433:5432
         environment:
-             - POSTGRES_USER=ts
+             - POSTGRES_USER=ts_user
              - POSTGRES_DB=ts_db
-             - POSTGRES_PASSWORD=ts
-             - PGPASSWORD=ts
+             - POSTGRES_PASSWORD=ts_pass
+             - PGPASSWORD=ts_pass
