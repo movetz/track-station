@@ -4,9 +4,9 @@ services:
         build:
             context: ./provision/nginx
         container_name: ts_web
-        ports:
-            #TODO: Add dns resolver
-             - 0.0.0.0:8080:80
+        environment:
+             - VIRTUAL_HOST=ts.docker
+             - VIRTUAL_PORT=80
         depends_on:
              - app
     app:

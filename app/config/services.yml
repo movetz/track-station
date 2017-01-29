@@ -7,3 +7,10 @@ services:
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+
+
+    app.inf.request.request_mapper:
+        class: AppBundle\Infr\Request\RequestMapper
+        autowire: true
+        tags:
+            - { name: request.param_converter, priority: -2, converter: request_mapper }
