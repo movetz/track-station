@@ -1,0 +1,26 @@
+parameters:
+    exception_maps:
+        AppBundle\Endpoint\Api\Exception\ValidationException :
+            { status_code: 422, formatter: AppBundle\Endpoint\Api\Exception\ValidationExceptionFormatter }
+
+services:
+    app.endpoint.api.command_mapper:
+        class: AppBundle\Endpoint\Api\ParamConverter\CommandParamConverter
+        arguments:
+            - '@validator'
+        tags:
+            - { name: request.param_converter, priority: -2, converter: command_mapper }
+
+    app.endpoint.api.double_dispatch_resolver:
+        class: AppBundle\Endpoint\Api\ParamConverter\DoubleDispatchParamConverter
+        arguments:
+            - '@service_container'
+        tags:
+            - { name: request.param_converter, priority: -2, converter: dd_resolver }
+
+    app.endpoint.api.exception_listener:
+            class: AppBundle\Endpoint\Api\EventListener\ExceptionResponseListener
+            arguments:
+                - '%exception_maps%'
+            tags:
+                - { name: 'kernel.event_listener', event: 'kernel.exception', priority: -64 }

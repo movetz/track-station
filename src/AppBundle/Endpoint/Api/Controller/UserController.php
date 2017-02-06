@@ -2,40 +2,37 @@
 
 namespace AppBundle\Endpoint\Api\Controller;
 
-use AppBundle\Domain\User\Query\GetUserQuery;
-use AppBundle\Handler\User\CreateUserCommand;
-use AppBundle\Handler\User\CreateUserHandler;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AppBundle\Handler\User\{
+    CreateUserCommand,
+    CreateUserHandler
+};
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
-
-
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
+
 
 /**
  * Class UserController
  * @package AppBundle\Endpoint\Http\Controller
  */
-class UserController extends Controller
+class UserController extends AbstractController
 {
     /**
      * @Config\Route("/users")
      * @Config\Method("POST")
      *
+     * @Config\ParamConverter("command", converter="command_mapper", options={ "auto_uid" : "uid" })
+     * @Config\ParamConverter("handler", converter="dd_resolver", options={ "name" : "app.handler.user.create" })
+     *
      * @param CreateUserCommand $command
      * @param CreateUserHandler $handler
-     * @param GetUserQuery $userQuery
-     *
      * @return JsonResponse
      */
-    public function create(CreateUserCommand $command, CreateUserHandler $handler, GetUserQuery $userQuery)
+    public function create(CreateUserCommand $command, CreateUserHandler $handler)
     {
-        $command->uid = uniqid();
-
         $handler($command);
-        $this->get('doctrine.orm.entity_manager')->flush();
+        $this->flush();
 
-        return new JsonResponse($userQuery->execute($command->uid));
+        //return $this->json($userQuery->execute($command->uid));
     }
 
     /**

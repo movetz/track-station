@@ -24,7 +24,11 @@
         "incenteev/composer-parameter-handler": "^2.0",
         "lexik/jwt-authentication-bundle": "^2.1",
         "jms/di-extra-bundle": "^1.8",
-        "league/fractal": "^0.15.0"
+        "league/fractal": "^0.15.0",
+        "hashids/hashids": "^1.0",
+        "ramsey/uuid": "^3.5",
+        "league/flysystem": "^1.0",
+        "aws/aws-sdk-php": "^3.21"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
