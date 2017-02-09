@@ -28,7 +28,8 @@
         "hashids/hashids": "^1.0",
         "ramsey/uuid": "^3.5",
         "league/flysystem": "^1.0",
-        "aws/aws-sdk-php": "^3.21"
+        "aws/aws-sdk-php": "^3.21",
+        "netresearch/jsonmapper": "^1.1"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

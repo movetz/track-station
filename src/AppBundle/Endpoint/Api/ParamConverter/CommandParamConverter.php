@@ -8,14 +8,8 @@ use AppBundle\Infr\Uid;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\ParamConverterInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Serializer\{
-    Encoder\JsonEncoder,
-    NameConverter\CamelCaseToSnakeCaseNameConverter,
-    Normalizer\ObjectNormalizer,
-    Serializer
-};
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-
+use JsonMapper;
 
 /**
  * Class RequestMapper
@@ -29,20 +23,18 @@ class CommandParamConverter implements ParamConverterInterface
     private $validator;
 
     /**
-     * @var Serializer
+     * @var JsonMapper
      */
-    private $serializer;
+    private $mapper;
 
     /**
      * CommandParamConverter constructor.
      * @param ValidatorInterface $validator
      */
-    public function __construct(ValidatorInterface $validator)
+    public function __construct(ValidatorInterface $validator, JsonMapper $mapper)
     {
         $this->validator = $validator;
-
-        $normalizer = new ObjectNormalizer(null, new CamelCaseToSnakeCaseNameConverter());
-        $this->serializer = new Serializer([$normalizer], [new JsonEncoder()]);
+        $this->mapper = $mapper;
     }
 
     /**
@@ -52,18 +44,22 @@ class CommandParamConverter implements ParamConverterInterface
     {
         $class = $configuration->getClass();
 
-        $command = $this->serializer->deserialize($request->getContent(), $class, JsonEncoder::FORMAT);
+        $command = $this->mapper->map($this->decodeBody($request), new $class);
 
+
+        //TODO: Update options
         $options = $configuration->getOptions();
 
-        if (array_key_exists('auto_uid', $options)) {
+        if ($options['auto_uid'] ?? false) {
             $propertyName = $options['auto_uid'];
             $command->$propertyName = Uid::make();
         }
 
-        if (array_key_exists('validation', $options) && $options['validation'] !== false) {
+        if ($options['validation'] ?? true) {
             $errors = $this->validator->validate($command);
-            throw new ValidationException($errors);
+            if ($errors->count() > 0) {
+                throw new ValidationException($errors);
+            }
         }
 
         $request->attributes->set(
@@ -78,5 +74,14 @@ class CommandParamConverter implements ParamConverterInterface
     public function supports(ParamConverter $configuration)
     {
         return is_subclass_of($configuration->getClass(), CommandTag::class);
+    }
+
+    /**
+     * @param Request $request
+     * @return \stdClass|array
+     */
+    private function decodeBody(Request $request)
+    {
+        return json_decode($request->getContent());
     }
 }

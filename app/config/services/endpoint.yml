@@ -8,6 +8,7 @@ services:
         class: AppBundle\Endpoint\Api\ParamConverter\CommandParamConverter
         arguments:
             - '@validator'
+            - '@app.infr.json_mapper'
         tags:
             - { name: request.param_converter, priority: -2, converter: command_mapper }
 
