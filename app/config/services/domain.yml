@@ -1,0 +1,4 @@
+services:
+    domain.user.remository:
+        class: AppBundle\Model\Domain\User\UserRepository
+        autowire: true
