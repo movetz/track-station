@@ -1,0 +1,21 @@
+language: php
+
+php:
+  - 7.0.1
+  - 7.1
+  - hhvm
+
+
+env:
+  - SYMFONY_VERSION=2.8.*
+  - SYMFONY_VERSION=3.2.*
+
+before_script:
+  - composer self-update
+  - composer require symfony/framework-bundle:${SYMFONY_VERSION} --prefer-source
+  - composer install --dev --prefer-source
+
+notifications:
+    email:
+        - dsazztazz@gmail.com
+        - maks.mova@gmail.com
