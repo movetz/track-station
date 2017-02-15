@@ -37,7 +37,7 @@ class CreateUserHandler
      */
     public function __construct(
         UserRepository $repository,
-        EventDispatcher $dispatcher,
+        EventDispatcherInterface $dispatcher,
         PasswordEncoderInterface $encoder
     ) {
         $this->repository = $repository;
