@@ -14,7 +14,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class DoubleDispatchParamConverter implements ParamConverterInterface
 {
     /**
-     * @var
+     * @var ContainerInterface
      */
     private $container;
 

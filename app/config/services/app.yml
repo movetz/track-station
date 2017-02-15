@@ -5,5 +5,3 @@ services:
             - '@domain.user.repository'
             - '@event_dispatcher'
             - '@security.password_encoder'
-
-    #Api endpoint
