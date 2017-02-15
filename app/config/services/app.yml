@@ -1,6 +1,9 @@
 services:
     app.handler.user.create:
         class: AppBundle\Handler\User\CreateUserHandler
-        autowire: true
+        arguments:
+            - '@domain.user.repository'
+            - '@event_dispatcher'
+            - '@security.password_encoder'
 
     #Api endpoint
