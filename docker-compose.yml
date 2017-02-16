@@ -13,6 +13,13 @@ services:
         build:
             context: ./provision/php-fpm
         container_name: ts_app
+        environment:
+            - SYMFONY__DATABASE__NAME=${DB_NAME}
+            - SYMFONY__DATABASE__USER=${DB_USER}
+            - SYMFONY__DATABASE__PASS=${DB_PASS}
+            - SYMFONY__APP__SECRET=${APP_SECRET}
+            - SYMFONY__STORAGE__ACCESS__KEY=${STORAGE_ACCESS_KEY}
+            - SYMFONY__STORAGE__SECRET__KEY=${STORAGE_SECRET_KEY}
         volumes:
              - ./:/app
 
@@ -22,7 +29,33 @@ services:
         ports:
              - 0.0.0.0:5433:5432
         environment:
-             - POSTGRES_USER=ts_user
-             - POSTGRES_DB=ts_db
-             - POSTGRES_PASSWORD=ts_pass
-             - PGPASSWORD=ts_pass
+             - POSTGRES_USER=${DB_USER}
+             - POSTGRES_DB=${DB_NAME}
+             - POSTGRES_PASSWORD=${DB_PASS}
+             - PGPASSWORD=${DB_PASS}
+
+    storage:
+        image: minio/minio
+        ports:
+            - "9000:9000"
+        volumes:
+            - storage_data:/export
+        environment:
+            - MINIO_ACCESS_KEY=${STORAGE_ACCESS_KEY}
+            - MINIO_SECRET_KEY=${STORAGE_SECRET_KEY}
+        command: server /export
+
+
+    uploader:
+        build:
+            context: ./uploader
+            dockerfile: provision/Dockerfile
+        container_name: ts_uploader
+        ports:
+            - 0.0.0.0:8090:80
+        volumes:
+            - ./uploader:/usr/src/app
+
+
+volumes:
+    storage_data: {}
