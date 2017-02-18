@@ -42,6 +42,7 @@ class CreateUserHandler
     ) {
         $this->repository = $repository;
         $this->dispatcher = $dispatcher;
+        $this->encoder = $encoder;
     }
 
     /**
