@@ -46,7 +46,6 @@ class CommandParamConverter implements ParamConverterInterface
 
         $command = $this->mapper->map($this->decodeBody($request), new $class);
 
-
         //TODO: Update options
         $options = $configuration->getOptions();
 

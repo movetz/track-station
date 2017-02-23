@@ -1,4 +1,12 @@
+parameters:
+    encoding_cost: 13
+
 services:
     domain.user.repository:
         class: AppBundle\Model\Domain\User\UserRepository
         autowire: true
+
+    domain.user.password_encoder:
+        class: Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder
+        arguments:
+            - '%encoding_cost%'

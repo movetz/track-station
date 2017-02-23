@@ -4,4 +4,4 @@ services:
         arguments:
             - '@domain.user.repository'
             - '@event_dispatcher'
-            - '@security.password_encoder'
+            - '@domain.user.password_encoder'
