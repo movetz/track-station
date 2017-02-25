@@ -5,6 +5,7 @@ namespace AppBundle\Model\Tests\Domain\User;
 use AppBundle\Model\Domain\User\UserBuilder;
 use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use AppBundle\Model\Domain\User\User;
 
 /**
  * Class UserBuilder
@@ -14,6 +15,17 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 class UserBuilderTest extends KernelTestCase
 {
     /**
+     * @var PasswordEncoderInterface
+     */
+    private $encoder;
+    private $password;
+    /**
+     * @var UserBuilder
+     */
+    private $userBuilder;
+
+
+    /**
      * {@inheritDoc}
      */
     protected function setUp()
@@ -21,15 +33,27 @@ class UserBuilderTest extends KernelTestCase
         self::bootKernel();
         $container = static::$kernel->getContainer();
         $this->encoder = $container->get('domain.user.password_encoder');
+        $this->password = 'trackstation';
+
+        $userBuilder = new UserBuilder();
+        $userBuilder->withUid('trackstation');
+        $userBuilder->withName('trackstation');
+        $userBuilder->withEmail('trackstation@trackstation.com');
+
+        $this->userBuilder = $userBuilder;
     }
 
     public function testIsUserEncodedPasswordValid()
     {
-        $userBuilder = new UserBuilder();
+        $this->assertTrue(
+            $this->encoder->isPasswordValid(
+                $this->userBuilder->getPassword(),
+                $password,
+                null
+            )
+        );
 
-        $password = 'trackstation';
-        $userBuilder->withPassword($password, $this->encoder);
-
-        $this->assertTrue($this->encoder->isPasswordValid($userBuilder->getPassword(), $password, null));
+        $user = $this->userBuilder->build();
+        $this->assertTrue($user->isPasswordValid($this->encoder, $password));
     }
 }
