@@ -39,6 +39,7 @@ class UserBuilderTest extends KernelTestCase
         $userBuilder->withUid('trackstation');
         $userBuilder->withName('trackstation');
         $userBuilder->withEmail('trackstation@trackstation.com');
+        $userBuilder->withPassword($this->password, $this->encoder);
 
         $this->userBuilder = $userBuilder;
     }
@@ -48,12 +49,12 @@ class UserBuilderTest extends KernelTestCase
         $this->assertTrue(
             $this->encoder->isPasswordValid(
                 $this->userBuilder->getPassword(),
-                $password,
+                $this->password,
                 null
             )
         );
 
         $user = $this->userBuilder->build();
-        $this->assertTrue($user->isPasswordValid($this->encoder, $password));
+        $this->assertTrue($user->isPasswordValid($this->encoder, $this->password));
     }
 }
