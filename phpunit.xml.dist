@@ -13,8 +13,8 @@
     </php>
 
     <testsuites>
-        <testsuite name="Project Test Suite">
-            <directory>tests</directory>
+        <testsuite name="Domain">
+            <directory>./src/AppBundle/Domain/Tests</directory>
         </testsuite>
     </testsuites>
 
@@ -25,6 +25,7 @@
                 <directory>src/*Bundle/Resources</directory>
                 <directory>src/*/*Bundle/Resources</directory>
                 <directory>src/*/Bundle/*Bundle/Resources</directory>
+                <directory>./vendor</directory>
             </exclude>
         </whitelist>
     </filter>
