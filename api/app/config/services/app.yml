@@ -1,0 +1,8 @@
+services:
+    app.handler.user.create:
+        class: AppBundle\Handler\User\CreateUserHandler
+        autowire: true
+
+    app.handler.video.create:
+            class: AppBundle\Handler\Video\CreateVideoHandler
+            autowire: true

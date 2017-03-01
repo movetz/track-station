@@ -1,18 +1,18 @@
 version: '2'
 services:
-    web:
+    gateway:
         build:
-            context: ./provision/nginx
-        container_name: ts_web
+            context: ./gateway
+        container_name: ts_gateway
         environment:
              - VIRTUAL_HOST=ts.docker
              - VIRTUAL_PORT=80
         depends_on:
-             - app
-    app:
+             - api
+    api:
         build:
-            context: ./provision/php-fpm
-        container_name: ts_app
+            context: ./api
+        container_name: ts_api
         environment:
             - SYMFONY__DATABASE__NAME=${DB_NAME}
             - SYMFONY__DATABASE__USER=${DB_USER}
@@ -21,7 +21,7 @@ services:
             - SYMFONY__STORAGE__ACCESS__KEY=${STORAGE_ACCESS_KEY}
             - SYMFONY__STORAGE__SECRET__KEY=${STORAGE_SECRET_KEY}
         volumes:
-             - ./:/app
+             - ./api:/app
 
     database:
         image: postgres:9.4
@@ -51,8 +51,6 @@ services:
             context: ./uploader
             dockerfile: provision/Dockerfile
         container_name: ts_uploader
-        ports:
-            - 0.0.0.0:8090:80
         volumes:
             - ./uploader:/usr/src/app
 

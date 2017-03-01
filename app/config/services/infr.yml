@@ -1,4 +1,0 @@
-services:
-    app.infr.json_mapper:
-        class: JsonMapper
-        autowire: true
