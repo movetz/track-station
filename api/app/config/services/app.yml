@@ -1,7 +1,10 @@
 services:
     app.handler.user.create:
         class: AppBundle\Handler\User\CreateUserHandler
-        autowire: true
+        arguments:
+            - '@domain.user.repository'
+            - '@event_dispatcher'
+            - '@domain.user.password_encoder'
 
     app.handler.video.create:
             class: AppBundle\Handler\Video\CreateVideoHandler

@@ -8,7 +8,6 @@ use AppBundle\Model\Domain\User\{
 use AppBundle\Handler\User\Event\UserCreatedEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * Class CreateUserHandler
@@ -38,11 +37,12 @@ class CreateUserHandler
      */
     public function __construct(
         UserRepository $repository,
-        UserPasswordEncoderInterface $encoder
+        EventDispatcherInterface $dispatcher,
+        PasswordEncoderInterface $encoder
     ) {
         $this->repository = $repository;
+        $this->dispatcher = $dispatcher;
         $this->encoder = $encoder;
-        //$this->dispatcher = $dispatcher;
     }
 
     /**
@@ -61,6 +61,6 @@ class CreateUserHandler
         $user = $builder->build();
         $this->repository->add($user);
 
-        //$this->dispatcher->dispatch(UserCreatedEvent::NAME, new UserCreatedEvent($user));
+        $this->dispatcher->dispatch(UserCreatedEvent::NAME, new UserCreatedEvent($user));
     }
 }

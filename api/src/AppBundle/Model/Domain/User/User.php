@@ -2,6 +2,7 @@
 
 namespace AppBundle\Model\Domain\User;
 
+use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 
@@ -98,5 +99,18 @@ class User
     public function getUid(): string
     {
         return $this->uid;
+    }
+
+    /**
+     * Is user password valid
+     *
+     * @param PasswordEncoderInterface $encoder
+     * @param mixed $password
+     *
+     * @return bool
+     */
+    public function isPasswordValid(PasswordEncoderInterface $encoder, $password): bool
+    {
+        return $encoder->isPasswordValid($this->password, $password, null);
     }
 }

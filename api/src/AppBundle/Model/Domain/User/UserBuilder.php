@@ -53,7 +53,7 @@ class UserBuilder
      */
     public function withPassword(string $plain, PasswordEncoderInterface $encoder): self
     {
-        $this->options['password'] = $encoder->encodePassword($plain, $encoder);
+        $this->options['password'] = $encoder->encodePassword($plain, null);
         return $this;
     }
 

@@ -2,3 +2,6 @@ app:
     resource: "@AppBundle/Endpoint/Api/Controller/"
     type:     annotation
     prefix: "/api"
+
+app_login_check:
+    path: /api/login_check

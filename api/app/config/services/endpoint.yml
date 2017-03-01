@@ -20,8 +20,8 @@ services:
             - { name: request.param_converter, priority: -2, converter: dd_resolver }
 
     app.endpoint.api.exception_listener:
-            class: AppBundle\Endpoint\Api\EventListener\ExceptionResponseListener
-            arguments:
-                - '%exception_maps%'
-            tags:
-                - { name: 'kernel.event_listener', event: 'kernel.exception', priority: -64 }
+        class: AppBundle\Endpoint\Api\EventListener\ExceptionResponseListener
+        arguments:
+            - '%exception_maps%'
+        tags:
+            - { name: 'kernel.event_listener', event: 'kernel.exception', priority: -64 }
