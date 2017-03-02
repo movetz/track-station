@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Handler\User;
+namespace AppBundle\Service\User;
 
 use AppBundle\Model\Domain\User\{
     UserRepository, UserBuilder

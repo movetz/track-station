@@ -9,12 +9,11 @@ use AppBundle\Handler\User\{
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-
 /**
  * Class UserController
  * @package AppBundle\Endpoint\Http\Controller
  */
-class UserController extends AbstractController
+class UserDomainController extends AbstractController
 {
     /**
      * @Config\Route("/users")

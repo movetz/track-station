@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Endpoint\Api\ParamConverter;
+namespace Infr\Http\ParamConverter;
 
 use AppBundle\Endpoint\Api\Exception\ValidationException;
 use AppBundle\Handler\CommandTag;

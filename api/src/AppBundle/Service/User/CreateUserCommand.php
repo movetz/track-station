@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Handler\User;
+namespace AppBundle\Service\User;
 
 use AppBundle\Handler\CommandTag;
 use Symfony\Component\Validator\Constraints as Assert;

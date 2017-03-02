@@ -1,10 +1,9 @@
 <?php
 
-namespace AppBundle\Model\Domain\User;
+namespace AppBundle\Domain\User;
 
 use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 
 /**
  * //TODO: Add password management case
@@ -44,6 +43,9 @@ class User
      * @ORM\Column(type="string")
      */
     private $password;
+
+    //TODO: Implement user location feature
+    private $location;
 
     /**
      * User constructor.

@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Model\Domain\User;
+namespace AppBundle\Domain\User;
 
 use AppBundle\Model\Domain\User\Exception\UserConflictException;
 
