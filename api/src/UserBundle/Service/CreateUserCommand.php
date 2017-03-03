@@ -1,15 +1,15 @@
 <?php
 
-namespace AppBundle\Service\User;
+namespace UserBundle\Service;
 
-use AppBundle\Handler\CommandTag;
+use InfrBundle\Service\CommandTagInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class CreateUserCommand
  * @package AppBundle\Handler\User
  */
-class CreateUserCommand implements CommandTag
+class CreateUserCommand implements CommandTagInterface
 {
     /**
      * @Assert\NotBlank()

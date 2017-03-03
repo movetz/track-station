@@ -4,23 +4,27 @@ parameters:
             { status_code: 422, formatter: AppBundle\Endpoint\Api\Exception\ValidationExceptionFormatter }
 
 services:
-    app.endpoint.api.command_mapper:
-        class: AppBundle\Endpoint\Api\ParamConverter\CommandParamConverter
+    app.infr.http.json_mapper:
+        class: JsonMapper
+        autowire: true
+
+    app.infr.http.command_mapper:
+        class: InfrBundle\Http\ParamConverter\CommandParamConverter
         arguments:
             - '@validator'
-            - '@app.infr.json_mapper'
+            - '@app.infr.http.json_mapper'
         tags:
             - { name: request.param_converter, priority: -2, converter: command_mapper }
 
-    app.endpoint.api.double_dispatch_resolver:
-        class: AppBundle\Endpoint\Api\ParamConverter\DoubleDispatchParamConverter
+    app.infr.http.double_dispatch_resolver:
+        class: InfrBundle\Http\ParamConverter\DoubleDispatchParamConverter
         arguments:
             - '@service_container'
         tags:
             - { name: request.param_converter, priority: -2, converter: dd_resolver }
 
-    app.endpoint.api.exception_listener:
-        class: AppBundle\Endpoint\Api\EventListener\ExceptionResponseListener
+    app.infr.http.exception_listener:
+        class: InfrBundle\Http\EventListener\ExceptionResponseListener
         arguments:
             - '%exception_maps%'
         tags:

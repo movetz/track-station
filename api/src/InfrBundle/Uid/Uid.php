@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Infr;
+namespace InfrBundle\Uid;
 
 use Hashids\Hashids;
 use Ramsey\Uuid\Uuid;

@@ -1,0 +1,12 @@
+services:
+    app.user.query_controller:
+        class: UserBundle\Endpoint\Api\UserQueryController
+        autowire: true
+
+    app.user.service.create_user:
+        class: UserBundle\Service\CreateUserHandler
+        autowire: true
+#        arguments:
+#            - '@domain.user.repository'
+#            - '@event_dispatcher'
+#            - '@domain.user.password_encoder'

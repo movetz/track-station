@@ -1,10 +1,10 @@
 <?php
 
-namespace Infr\Http\ParamConverter;
+namespace InfrBundle\Http\ParamConverter;
 
-use AppBundle\Endpoint\Api\Exception\ValidationException;
-use AppBundle\Handler\CommandTag;
-use AppBundle\Infr\Uid;
+use InfrBundle\Http\Exception\ValidationException;
+use InfrBundle\Service\CommandTagInterface;
+use InfrBundle\Uid\Uid;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\ParamConverterInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -72,7 +72,7 @@ class CommandParamConverter implements ParamConverterInterface
      */
     public function supports(ParamConverter $configuration)
     {
-        return is_subclass_of($configuration->getClass(), CommandTag::class);
+        return is_subclass_of($configuration->getClass(), CommandTagInterface::class);
     }
 
     /**

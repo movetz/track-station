@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Endpoint\Api\Exception;
+namespace InfrBundle\Http\Exception;
 
 use RuntimeException;
 use Symfony\Component\Validator\ConstraintViolationListInterface;

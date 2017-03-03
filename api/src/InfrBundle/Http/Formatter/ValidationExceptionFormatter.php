@@ -1,8 +1,9 @@
 <?php
 
-namespace AppBundle\Endpoint\Api\Exception;
+namespace InfrBundle\Http\Formatter;
 
 use Symfony\Component\Validator\ConstraintViolation;
+use InfrBundle\Http\Exception\ValidationException;
 
 /**
  * Class ValidationFormatter

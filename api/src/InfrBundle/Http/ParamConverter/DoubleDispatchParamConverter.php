@@ -1,6 +1,6 @@
 <?php
 
-namespace InfrBundle\Htpp\ParamConverter;
+namespace InfrBundle\Http\ParamConverter;
 
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;

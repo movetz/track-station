@@ -1,10 +1,9 @@
 <?php
 
-namespace AppBundle\Endpoint\Api\EventListener;
+namespace InfrBundle\Http\EventListener;
 
 use Exception;
-use AppBundle\Endpoint\Api\Exception\ExceptionFormatter;
-use AppBundle\Endpoint\Api\Exception\ValidationException;
+use InfrBundle\Http\Exception\ValidationException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 
@@ -53,10 +52,11 @@ class ExceptionResponseListener
         }
 
 
-        $responseData = $this->makeFormatter($exception, $formatterClassName)->format();
-        $responseData['status_code'] = $responseCode;
 
-        $response = new JsonResponse($responseData, $responseCode);
+        //$responseData = $this->makeFormatter($exception, $formatterClassName)->format();
+        //$responseData['status_code'] = $responseCode;
+
+        $response = new JsonResponse([], $responseCode);
 
         $event->setResponse($response);
     }
@@ -66,8 +66,8 @@ class ExceptionResponseListener
      * @param string|null $className
      * @return ExceptionFormatter
      */
-    private function makeFormatter(Exception $exception, string $className = null): ExceptionFormatter
-    {
-        return $className ? new $className($exception) : new ExceptionFormatter($exception);
-    }
+//    private function makeFormatter(Exception $exception, string $className = null): ExceptionFormatter
+//    {
+//        return $className ? new $className($exception) : new ExceptionFormatter($exception);
+//    }
 }

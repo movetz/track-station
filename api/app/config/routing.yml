@@ -1,7 +1,7 @@
 app:
-    resource: "@AppBundle/Endpoint/Api/Controller/"
+    resource: "@UserBundle/Endpoint/Api/"
     type:     annotation
-    prefix: "/api"
+    prefix:   "/api/users"
 
 app_login_check:
     path: /api/login_check

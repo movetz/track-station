@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Endpoint\Api\Exception;
+namespace InfrBundle\Htpp\Formatter;
 
 use Exception;
 
