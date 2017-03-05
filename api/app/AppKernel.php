@@ -17,9 +17,11 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle(),
             new Snc\RedisBundle\SncRedisBundle(),
+            new \LiteCQRS\Plugin\SymfonyBundle\LiteCQRSBundle(),
             //new AppBundle\AppBundle(),
             new InfrBundle\InfrBundle(),
             new UserBundle\UserBundle(),
+            new VideoBundle\VideoBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

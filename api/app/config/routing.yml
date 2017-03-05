@@ -1,7 +1,13 @@
-app:
+app_login_check:
+    path: /api/login
+
+user:
     resource: "@UserBundle/Endpoint/Api/"
     type:     annotation
     prefix:   "/api/users"
 
-app_login_check:
-    path: /api/login_check
+video:
+    resource: "@VideoBundle/Endpoint/Api/"
+    type:     annotation
+    prefix:   "/api"
+

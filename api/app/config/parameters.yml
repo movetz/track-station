@@ -13,6 +13,11 @@ parameters:
 
     secret: %app.secret%
 
+    jwt_private_key_path: %kernel.root_dir%/var/jwt/private.pem
+    jwt_public_key_path:  %kernel.root_dir%/var/jwt/public.pem
+    jwt_key_pass_phrase:  'track_station'
+    jwt_token_ttl:        3600
+
     storage_access_key: %storage.access.key%
     storage_secret_key: %storage.secret.key%
 

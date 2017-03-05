@@ -25,13 +25,10 @@ class UserDomainController extends AbstractController
      */
     public function createAction(CreateUserCommand $command, CreateUserHandler $handler)
     {
+        //TODO: Fix security issue
         $handler($command);
+        $this->flush();
 
-
-        //$this->flush();
-
-        return $this->forward('app.user.query_controller:getAction', ['id' => $command->uid]);
-
-        //return $this->json($userQuery->execute($command->uid));
+        return $this->forward('app.user.query_controller:getAction', ['uid' => $command->uid]);
     }
 }

@@ -2,8 +2,10 @@
 
 namespace UserBundle\Service;
 
-use AppBundle\Model\Domain\User\UserBuilder;
-use UserBundle\Domain\UserRepository;
+use Symfony\Component\Security\Core\Encoder\EncoderFactory;
+use UserBundle\Domain\{
+    User, UserBuilder, UserRepository
+};
 
 /**
  * Class CreateUserHandler
@@ -11,15 +13,25 @@ use UserBundle\Domain\UserRepository;
  */
 class CreateUserHandler
 {
+    /**
+     * @var UserRepository
+     */
     private $userRepository;
+
+    /**
+     * @var EncoderFactory
+     */
+    private $encoderFactory;
 
     /**
      * CreateUserHandler constructor.
      * @param UserRepository $userRepository
+     * @param EncoderFactory $encoderFactory
      */
-    public function __construct(UserRepository $userRepository)
+    public function __construct(UserRepository $userRepository, EncoderFactory $encoderFactory)
     {
         $this->userRepository = $userRepository;
+        $this->encoderFactory = $encoderFactory;
     }
 
     /**
@@ -27,10 +39,12 @@ class CreateUserHandler
      */
     public function __invoke(CreateUserCommand $command)
     {
+        //TODO: Add mailer
         $user = (new UserBuilder())
             ->withUid($command->uid)
             ->withEmail($command->email)
             ->withName($command->name)
+            ->withPassword($command->password, $this->encoderFactory->getEncoder(User::class))
             ->build();
 
         $this->userRepository->add($user);

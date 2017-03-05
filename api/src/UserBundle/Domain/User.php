@@ -2,16 +2,22 @@
 
 namespace UserBundle\Domain;
 
+use InfrBundle\Domain\Event\{
+    DomainEventProviderTrait, DomainEventProviderInterface
+};
 use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * //TODO: Add password management case
  * @ORM\Entity()
  * @ORM\Table(name="users")
  */
-class User
+class User implements DomainEventProviderInterface, UserInterface
 {
+    use DomainEventProviderTrait;
+
     /**
      * @var int
      * @ORM\Id
@@ -22,7 +28,7 @@ class User
 
     /**
      * @var string
-     * @ORM\Column(type="guid", unique=true)
+     * @ORM\Column(type="string", length=8, options={"fixed" = true})
      */
     private $uid;
 
@@ -49,25 +55,15 @@ class User
 
     /**
      * User constructor.
-     * @param string $uid
-     * @param string $email
-     * @param string $name
-     * @param string $plainPassword
-     * @param PasswordEncoderInterface $encoder
+     * @param UserBuilder $builder
      */
-    public function __construct(
-        string $uid,
-        string $email,
-        string $name,
-        string $plainPassword,
-        PasswordEncoderInterface $encoder
-    ) {
-        $this->uid = $uid;
-        $this->email = $email;
-        $this->name = $name;
-        $this->changePassword($plainPassword, $encoder);
+    public function __construct(UserBuilder $builder) {
+        $this->uid = $builder->getUid();
+        $this->email = $builder->getEmail();
+        $this->name = $builder->getName();
+        $this->password = $builder->getPassword();
 
-        //TODO: Add domain events
+        $this->raise(new UserCreatedEvent($this->uid, $this->email, $this->name));
     }
 
     /**
@@ -114,5 +110,44 @@ class User
     public function isPasswordValid(PasswordEncoderInterface $encoder, $password): bool
     {
         return $encoder->isPasswordValid($this->password, $password, null);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getRoles()
+    {
+        return ['ROLE_USER'];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getSalt()
+    {
+        return '';
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getUsername()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function eraseCredentials()
+    {
     }
 }

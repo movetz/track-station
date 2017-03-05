@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Model\Domain\Video;
+namespace VideoBundle\Domain;
 
 use Doctrine\ORM\Mapping as ORM;
 

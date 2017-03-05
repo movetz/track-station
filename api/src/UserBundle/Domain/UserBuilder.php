@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Model\Domain\User;
+namespace UserBundle\Domain;
 
 use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 
@@ -62,7 +62,7 @@ class UserBuilder
      */
     public function getUid(): string
     {
-        return $this->options['uuid'] ?? uniqid();
+        return $this->options['uid'];
     }
 
     /**

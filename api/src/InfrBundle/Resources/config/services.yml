@@ -13,6 +13,7 @@ services:
         arguments:
             - '@validator'
             - '@app.infr.http.json_mapper'
+            - '@security.token_storage'
         tags:
             - { name: request.param_converter, priority: -2, converter: command_mapper }
 
@@ -29,3 +30,15 @@ services:
             - '%exception_maps%'
         tags:
             - { name: 'kernel.event_listener', event: 'kernel.exception', priority: -64 }
+
+    app.infr.http.request_body_listener:
+            class: InfrBundle\Http\EventListener\RequestBodyListener
+            tags:
+                - { name: kernel.event_listener, event: kernel.request, priority: 64 }
+
+    app.domain.event_dispatcher:
+        class: InfrBundle\Domain\Event\Dispatcher
+        arguments:
+            - '@event_dispatcher'
+        tags:
+            - { name: doctrine.event_listener, event: postFlush, connection: default }

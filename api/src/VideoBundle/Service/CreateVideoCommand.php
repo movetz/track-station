@@ -1,15 +1,15 @@
 <?php
 
-namespace AppBundle\Handler\Video;
+namespace VideoBundle\Service;
 
-use AppBundle\Handler\CommandTag;
+use InfrBundle\Service\CommandTagInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class CreateVideoCommand
  * @package AppBundle\Handler\Video
  */
-class CreateVideoCommand implements CommandTag
+class CreateVideoCommand implements CommandTagInterface
 {
     public $uid;
 
@@ -24,20 +24,17 @@ class CreateVideoCommand implements CommandTag
     public $name;
 
     /**
+     * @Assert\Length(
+     *   max = 300
+     * )
      * @var string
      */
-    public $description;
+    public $description = '';
 
     /**
      * @var array
      */
     public $tags;
 
-//    /**
-//     * @Assert\Type(type="AppBundle\Handler\User\CreateUserCommand")
-//     * @Assert\Valid()
-//     *
-//     * @var \AppBundle\Handler\User\CreateUserCommand
-//     */
-//    public $user;
+    public $user;
 }

@@ -1,0 +1,12 @@
+services:
+    app.video.service.create_video:
+        class: VideoBundle\Service\CreateVideoHandler
+        autowire: true
+
+    app.video.domain.video_repository:
+        class: VideoBundle\Domain\VideoRepository
+        autowire: true
+
+    app.video.domain.tag_repository:
+        class: VideoBundle\Domain\TagRepository
+        autowire: true

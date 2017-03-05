@@ -8,6 +8,7 @@ use InfrBundle\Uid\Uid;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\ParamConverterInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use JsonMapper;
 
@@ -28,13 +29,21 @@ class CommandParamConverter implements ParamConverterInterface
     private $mapper;
 
     /**
+     * @var TokenStorageInterface
+     */
+    private $tokenStorage;
+
+    /**
      * CommandParamConverter constructor.
      * @param ValidatorInterface $validator
+     * @param JsonMapper $mapper
+     * @param TokenStorageInterface $tokenStorage$tokenStorage
      */
-    public function __construct(ValidatorInterface $validator, JsonMapper $mapper)
+    public function __construct(ValidatorInterface $validator, JsonMapper $mapper, TokenStorageInterface $tokenStorage)
     {
         $this->validator = $validator;
         $this->mapper = $mapper;
+        $this->tokenStorage = $tokenStorage;
     }
 
     /**
@@ -59,6 +68,11 @@ class CommandParamConverter implements ParamConverterInterface
             if ($errors->count() > 0) {
                 throw new ValidationException($errors);
             }
+        }
+
+        if ($options['auth'] ?? false && null !== $this->tokenStorage->getToken()) {
+            $authPropertyName = $options['auth'];
+            $command->$authPropertyName = $this->tokenStorage->getToken()->getUser();
         }
 
         $request->attributes->set(
