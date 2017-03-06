@@ -36,6 +36,7 @@ services:
 
     storage:
         image: minio/minio
+        container_name: ts_storage
         ports:
             - "9000:9000"
         volumes:
@@ -54,6 +55,19 @@ services:
         volumes:
             - ./uploader:/usr/src/app
 
+    mq:
+        build:
+            context: ./mq
+        container_name: ts_mq
+        ports:
+            - "5672:5672"
+            - "15671:15671"
+            - "8080:15672"
+        #privileged: false
+        environment:
+            - RABBITMQ_DEFAULT_USER=${MQ_USER}
+            - RABBITMQ_DEFAULT_PASS=${MQ_PASS}
+            - RABBITMQ_DEFAULT_VHOST=/
 
 volumes:
     storage_data: {}
